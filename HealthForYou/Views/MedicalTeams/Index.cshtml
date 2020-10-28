@@ -1,0 +1,83 @@
+﻿@model IEnumerable<HealthForYou.Models.MedicalTeam>
+@using Microsoft.AspNetCore.Identity
+@using HealthForYou.Areas.Identity.Data
+@inject SignInManager<HealthForYouUser> SignInManager
+@inject UserManager<HealthForYouUser> UserManager
+@{ }
+
+<form asp-controller="MedicalTeams" asp-action="Index" method="get">
+    <label>  Doctor Name:<input type="text" name="searchString" /></label>
+    <label> Years of experience:<input type="range" name="yearsOfExp" min="0" max="30" value="15" /></label>
+    <label>  Expertise:<input type="text" name="Expertise" /></label>
+
+    <button type="submit" class="btn btn-outline-success" >
+        Filter
+    </button>
+
+    <button type="reset" class="btn btn-danger">
+        Reset
+    </button>
+
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location)
+            </th>
+
+
+            <th>
+                @Html.DisplayNameFor(model => model.YearsOfexp)
+            </th>
+
+
+            <th>
+                @Html.DisplayNameFor(model => model.Expertise)
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Location)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.YearsOfexp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Expertise)
+            </td>
+            <td>
+                <a asp-action="Delete" asp-route-id="@item.DoctorId">Delete</a>
+                <a asp-action="Details" asp-route-id="@item.DoctorId">Details</a>
+                <button onclick="showInPopup('@Url.Action("Register","MedicalTeams",(new { id = item.DoctorId,userName=UserManager.GetUserName(User) }),Context.Request.Scheme)','Booking Confirmation')" class="btn btn-secondary text-white"><i class="fas fa-thumbs-up"></i>Reserve!</button>
+
+
+                @*<a asp-action="Register" asp-route-id="@item.DoctorId">Register</a>*@
+
+
+
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

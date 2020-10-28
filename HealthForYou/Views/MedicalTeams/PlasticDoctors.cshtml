@@ -1,0 +1,28 @@
+﻿@model IEnumerable<HealthForYou.Models.MedicalTeam>
+@using Microsoft.AspNetCore.Identity
+@using HealthForYou.Areas.Identity.Data
+@inject SignInManager<HealthForYouUser> SignInManager
+@inject UserManager<HealthForYouUser> UserManager
+@{ }
+
+<div class="text-center">
+    @foreach (var item in Model)
+    {
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@Html.DisplayFor(modelitem => item.FullName) </h5>
+                        <p class="card-text">Years of experience: @Html.DisplayFor(modelitem => item.YearsOfexp)</p>
+                        <p>
+                            <button onclick="showInPopup('@Url.Action("Register","MedicalTeams",(new { id = item.DoctorId,userName=UserManager.GetUserName(User) }),Context.Request.Scheme)','Booking Confirmation')" class="btn btn-secondary text-white"><i class="fas fa-thumbs-up"></i>Reserve!</button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+</div>
+
+
