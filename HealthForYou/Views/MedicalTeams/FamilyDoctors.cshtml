@@ -1,0 +1,33 @@
+﻿@model IEnumerable<HealthForYou.Models.MedicalTeam>
+@using Microsoft.AspNetCore.Identity
+@using HealthForYou.Areas.Identity.Data
+@inject SignInManager<HealthForYouUser> SignInManager
+@inject UserManager<HealthForYouUser> UserManager
+@{ }
+
+<div class="text-center">
+    @foreach (var item in Model)
+    {
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@Html.DisplayFor(modelitem=>item.FullName) </h5>
+                        <p class="card-text">Years of experience: @Html.DisplayFor(modelitem=>item.YearsOfexp)</p>
+                        <p>
+                            <form asp-controller="MedicalTeams" asp-action="Register" method="get">
+                                <input type="hidden" value="@UserManager.GetUserAsync(User).Result.UserName" name="username" />
+                                <button type="submit" class="btn btn-outline-primary" name="id" value="@Html.DisplayFor(modelitem=>item.DoctorId)">
+                                    <i class="fas fa-thumbs-up"></i>  Make Appoitment!
+                                </button>
+                            </form>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+    </div>
+
+
